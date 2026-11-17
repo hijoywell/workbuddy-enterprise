@@ -1,5 +1,5 @@
 {
-  "name": "@magpie-community/opencode-workbuddy-enterprise-auth",
+  "name": "workbuddy-enterprise-auth",
   "version": "0.1.0",
   "description": "OpenCode provider plugin for an enterprise (专属) deployment of WorkBuddy: its own host, sign-in, chats and enterprise credits",
   "type": "module",
