@@ -3444,13 +3444,13 @@ function namesEffort(chat) {
 // normalizeModelId maps the ids WorkBuddy's /v3/config lists onto the ids
 // its own chat endpoint serves. The Hy4 family is the mismatch: the config
 // lists hy4std and hy4free (hy4-std has also been seen), and the enterprise
-// gateway also lists hy4flash, but the endpoint serves one "hy4"
-// (hy4-free and hy4-preview are served as aliases). The app shows a single
-// Hy4, so the config's std/free split folds to "hy4"; hy4flash does too —
-// the chat endpoint has no service info for it and answers 400
-// "model [hy4flash] service info not found" (measured 2026-11-17).
+// gateway also lists hy4flash and hy4flash-free, but the endpoint serves
+// one "hy4" (hy4-free and hy4-preview are served as aliases). The app shows
+// a single Hy4, so the config's std/free split folds to "hy4"; both flash
+// ids do too — the enterprise chat endpoint has no service info for either
+// and answers 400 "model [...] service info not found" (2026-11-17).
 function normalizeModelId(id) {
-  if (id === "hy4std" || id === "hy4free" || id === "hy4-std" || id === "hy4flash") return "hy4"
+  if (id === "hy4std" || id === "hy4free" || id === "hy4-std" || id === "hy4flash" || id === "hy4flash-free") return "hy4"
   return id
 }
 
