@@ -3844,6 +3844,19 @@ function makePlugin(site) {
               if (again.status !== 401) return again
               return out("it refused the token renewed for it too", invalidToken(again), again)
             }
+            // The gateway's /v3/config lists the Hy4 ids without hyphens,
+            // but the chat endpoint's service names use them. A model list
+            // magpie cached before this plugin was updated (or an id typed
+            // by hand) still arrives with the old spelling, so translate it
+            // here, right before the body is written: every chat goes out
+            // with the endpoint's name (measured 2026-11-17).
+            if (!native && chat && typeof chat.model === "string") {
+              const served = normalizeModelId(chat.model)
+              if (served !== chat.model) {
+                chat.model = served
+                changed = true
+              }
+            }
             // a model known to turn tool results then the user's message away
             // gets the empty reply between them up front (see endsAfterTools)
             const model = chat?.model
