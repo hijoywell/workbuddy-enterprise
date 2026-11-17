@@ -1,38 +1,44 @@
 # WorkBuddy Enterprise
 
-一个 OpenCode/magpie 插件：登录企业专属部署的 WorkBuddy
+OpenCode / magpie provider 插件：登录企业专属部署的 WorkBuddy
 （`https://codechatturbo.copilot.qq.com`），用它自己的域名收发对话、读取企业额度。
 
-## 安装（用文件夹，不经 npm）
+## 安装
 
-插件只有 4 个文件，没有运行时依赖，拷过去就能用：
+```sh
+magpie plugin add github:hijoywell/workbuddy-enterprise
+```
 
-- `index.mjs`
-- `opencode.mjs`
-- `opencode2.mjs`
-- `package.json`
+或在 magpie：**Plugins → Add a plugin**，粘贴 GitHub 地址 `github:hijoywell/workbuddy-enterprise`。
+也可把仓库下载到本地任意目录，用 `magpie plugin add /path/to/workbuddy-enterprise` 添加该文件夹。
 
-1. 把整个 `workbuddy-enterprise` 文件夹放到一个**不会随便移动**的位置，例如
-   - Windows：`D:\plugins\workbuddy-enterprise`
-   - macOS / Linux：`~/plugins/workbuddy-enterprise`
-2. 打开 magpie → **Plugins（插件）→ 添加插件**，点 **Choose a folder** 选到这个文件夹；
-   或者直接把它的绝对路径粘贴进输入框。
-3. 列表里出现「WorkBuddy Enterprise」，然后去 **Providers** 用浏览器登录一次。
+装完在 **Plugins** 里出现 **WorkBuddy Enterprise**。
 
-## 绝对路径怎么填
+## 登录（关键）
 
-输入框里填的是**指向那个文件夹的完整路径**，不是 `index.mjs`，也不是压缩包：
+装好插件**不等于登录**。登录入口不在插件页，在 Providers：
 
-| 系统 | 写法 |
+- **图形界面**：**Providers → ＋ Add provider**，找到 **WorkBuddy Enterprise** 的卡片，点它 → 选登录方式 → 完成。
+- **命令行**：`magpie plugin login workbuddy-enterprise`
+
+三种登录方式，任选其一：
+
+| 方式 | 说明 |
 |---|---|
-| Windows | `D:\plugins\workbuddy-enterprise`（`D:/plugins/...` 也可以） |
-| macOS / Linux | `/Users/you/plugins/workbuddy-enterprise` |
+| WorkBuddy Enterprise account (browser) | 浏览器打开企业自己的登录页（推荐） |
+| WorkBuddy Enterprise desktop's sign-in | 复用桌面客户端已登录的账号；桌面端 5.6+ 加密了 token，读不到时会提示改用浏览器 |
+| WorkBuddy Enterprise API key | 在企业部署的 profile 页面生成 key |
 
-- 一定要写**从盘符 / 根目录开始的完整路径**，不要写 `./` 开头的相对路径。
-- 文件夹搬走后，`~/.config/magpie/plugins.json` 里对应的 `spec` 要跟着改成新路径。
-- 用 Choose a folder 选的话，路径是自动写好的，不用手抄。
+登录成功后，`magpie plugin` 会显示 `workbuddy-enterprise … signed in`。
+
+## 使用
+
+登录后在任意 agent 的模型选择器里选 `workbuddy-enterprise/…` 开头的模型即可。
 
 ## 更新
 
-这个插件不走 magpie 的自动更新。更新时把新的 4 个文件覆盖到同一文件夹，
-重启 magpie（或让它重载插件）即可。
+```sh
+magpie plugin update workbuddy-enterprise
+```
+
+或在 **Plugins** 里点该插件的 **Update**。
